@@ -1,0 +1,56 @@
+# SFT configuration
+optimizer:
+  lr: 1.0e-5
+  min_lr: 1.0e-6
+  weight_decay: 0.1
+  beta1: 0.9
+  beta2: 0.95
+  eps: 1.0e-8
+  grad_clip: 1.0
+  fused: true
+
+scheduler:
+  type: cosine
+  warmup_steps: 100
+  total_steps: 5000
+
+batch:
+  micro_batch_size: 2
+  gradient_accumulation_steps: 16
+  max_seq_len: 8192
+
+precision:
+  dtype: bfloat16
+  grad_scaler: false
+
+distributed:
+  dp_size: -1
+  tp_size: 1
+  pp_size: 1
+  ep_size: 1
+  cp_size: 1
+  fsdp_enabled: true
+
+checkpoint:
+  save_interval: 500
+  save_dir: checkpoints/sft
+  async_save: true
+  resume_from: null
+
+logging:
+  log_interval: 10
+  wandb_project: nanogpt-sft
+  wandb_enabled: false
+  tensorboard_enabled: true
+  tensorboard_dir: tb_logs/sft
+
+data:
+  train_data: data/sft_train
+  val_data: data/sft_val
+  num_workers: 4
+
+sft:
+  thinking_enabled: true
+  think_token: "<think>"
+  no_think_token: "</think>"
+  mask_input: true

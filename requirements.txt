@@ -1,0 +1,14 @@
+torch>=2.5.0
+triton>=3.0.0
+tiktoken
+wandb
+pyyaml
+einops
+safetensors
+numpy
+pillow
+torchvision
+datasets
+sentencepiece
+tensorboard
+tqdm

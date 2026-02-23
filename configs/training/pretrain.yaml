@@ -1,0 +1,49 @@
+# Pretraining configuration
+optimizer:
+  lr: 3.0e-4
+  min_lr: 3.0e-5
+  weight_decay: 0.1
+  beta1: 0.9
+  beta2: 0.95
+  eps: 1.0e-8
+  grad_clip: 1.0
+  fused: true
+
+scheduler:
+  type: cosine
+  warmup_steps: 2000
+  total_steps: 100000
+
+batch:
+  micro_batch_size: 4
+  gradient_accumulation_steps: 8
+  max_seq_len: 4096
+
+precision:
+  dtype: bfloat16
+  grad_scaler: false
+
+distributed:
+  dp_size: -1          # auto from world_size
+  tp_size: 1
+  pp_size: 1
+  ep_size: 1
+  cp_size: 1
+  fsdp_enabled: true
+
+checkpoint:
+  save_interval: 1000
+  save_dir: checkpoints
+  async_save: true
+
+logging:
+  log_interval: 10
+  wandb_project: nanogpt-pretrain
+  wandb_enabled: false
+  tensorboard_enabled: true
+  tensorboard_dir: tb_logs
+
+data:
+  train_data: data/train
+  val_data: data/val
+  num_workers: 4
